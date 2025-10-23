@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+.env
+.pytest_cache/
+.coverage
+htmlcov/
+*.log
+*.csv
+
+# App data
+var/
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
