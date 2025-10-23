@@ -2,12 +2,13 @@
 import math 
 from dataclasses import dataclass
 from .exceptions import OperationError, ValidationError
+from typing import Callable
 
 @dataclass(frozen=True)
 class Operation:
     """Represents an arithmetic operation with its function and help text."""
     name: str
-    func: callable
+    func: Callable[[float,float],float]
     help: str
 
 
