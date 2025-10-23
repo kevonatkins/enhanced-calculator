@@ -48,7 +48,24 @@ def modulus(a, b):
 def abs_diff(a, b):
     return abs(a - b) 
 
+def root(a, b):
+    # b-th root of a
+    if b == 0:
+        from .exceptions import ValidationError
+        raise ValidationError("0th root undefined")
+    # even root of negative is invalid for real numbers
+    if a < 0 and int(b) % 2 == 0:
+        from .exceptions import ValidationError
+        raise ValidationError("Even root of negative number")
+    # support odd roots of negatives: keep sign of a
+    return math.copysign(abs(a) ** (1.0 / b), 1 if a >= 0 else -1)
 
+def percent(a, b):
+    # (a / b) * 100
+    if b == 0:
+        from .exceptions import ValidationError
+        raise ValidationError("Percent with denominator zero")
+    return (a / b) * 100.0
 
 # === simple factory ===
 
