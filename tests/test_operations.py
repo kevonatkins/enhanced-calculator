@@ -26,3 +26,13 @@ def test_power_and_int_divide():
 
     assert idiv.func(7, 3) == 2
     assert idiv.func(-7, 3) == -2   # trunc toward 
+
+def test_modulus_and_abs_diff():
+    mod = make_operation("modulus")
+    absd = make_operation("abs_diff")
+
+    assert mod.func(10, 3) == 1
+    assert absd.func(-2, 4) == 6
+
+    with pytest.raises(Exception):
+        mod.func(5, 0)

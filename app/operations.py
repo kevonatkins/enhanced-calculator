@@ -39,6 +39,14 @@ def int_divide(a, b):
     import math
     return math.trunc(a / b)
 
+def modulus(a, b):
+    if b == 0:
+        from .exceptions import ValidationError
+        raise ValidationError("Modulus by zero")
+    return a % b
+
+def abs_diff(a, b):
+    return abs(a - b)
 
 # === simple factory ===
 
@@ -49,6 +57,8 @@ _operations = {
     "divide": Operation("divide", divide, "Divide first by second (a / b)"),
     "power": Operation("power", power, "Raise a to the power b (a ** b)"),
     "int_divide": Operation("int_divide", int_divide, "Integer quotient trunc(a / b)"),
+    "modulus": Operation("modulus", modulus, "Remainder of a / b (a % b)"),
+    "abs_diff": Operation("abs_diff", abs_diff, "Absolute difference |a - b|"),
 }
 
 
