@@ -36,3 +36,28 @@ def test_modulus_and_abs_diff():
 
     with pytest.raises(Exception):
         mod.func(5, 0)
+
+def test_root_and_percent():
+    rt = make_operation("root")
+    pct = make_operation("percent")
+
+    # 27^(1/3) = 3
+    assert pytest.approx(rt.func(27, 3), rel=1e-6) == 3
+
+    # odd root of negative is allowed: (-8)^(1/3) = -2
+    assert pytest.approx(rt.func(-8, 3), rel=1e-6) == -2
+
+    # even root of negative is invalid
+    with pytest.raises(Exception):
+        rt.func(-16, 2)
+
+    # 0th root undefined
+    with pytest.raises(Exception):
+        rt.func(9, 0)
+
+    # percent: (50 / 200) * 100 = 25.0
+    assert pct.func(50, 200) == 25.0
+
+    # denominator zero invalid
+    with pytest.raises(Exception):
+        pct.func(1, 0)

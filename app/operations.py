@@ -1,5 +1,5 @@
 # app/operations.py
-
+import math 
 from dataclasses import dataclass
 from .exceptions import OperationError, ValidationError
 
@@ -46,7 +46,9 @@ def modulus(a, b):
     return a % b
 
 def abs_diff(a, b):
-    return abs(a - b)
+    return abs(a - b) 
+
+
 
 # === simple factory ===
 
@@ -59,6 +61,8 @@ _operations = {
     "int_divide": Operation("int_divide", int_divide, "Integer quotient trunc(a / b)"),
     "modulus": Operation("modulus", modulus, "Remainder of a / b (a % b)"),
     "abs_diff": Operation("abs_diff", abs_diff, "Absolute difference |a - b|"),
+    "root": Operation("root", root, "b-th root of a"),
+    "percent": Operation("percent", percent, "(a / b) * 100"),
 }
 
 
@@ -72,4 +76,6 @@ def make_operation(name: str) -> Operation:
 
 def all_operations():
     """Return list of all supported operations."""
-    return list(_operations.values())
+    return list(_operations.values()) 
+
+
