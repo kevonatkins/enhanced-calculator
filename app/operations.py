@@ -22,6 +22,13 @@ def subtract(a, b):
 def multiply(a, b):
     return a * b
 
+def divide(a, b):
+    if b == 0:
+        from .exceptions import ValidationError
+        raise ValidationError("Division by zero")
+    return a / b
+
+
 
 # === simple factory ===
 
@@ -29,6 +36,7 @@ _operations = {
     "add": Operation("add", add, "Add two numbers (a + b)"),
     "subtract": Operation("subtract", subtract, "Subtract second number from first (a - b)"),
     "multiply": Operation("multiply", multiply, "Multiply two numbers (a * b)"),
+    "divide": Operation("divide", divide, "Divide first by second (a / b)"),
 }
 
 
