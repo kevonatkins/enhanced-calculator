@@ -26,8 +26,18 @@ def divide(a, b):
     if b == 0:
         from .exceptions import ValidationError
         raise ValidationError("Division by zero")
-    return a / b
+    return a / b 
 
+def power(a, b):
+    return a ** b
+
+def int_divide(a, b):
+    if b == 0:
+        from .exceptions import ValidationError
+        raise ValidationError("Division by zero")
+    # integer quotient (truncate toward 0)
+    import math
+    return math.trunc(a / b)
 
 
 # === simple factory ===
@@ -37,6 +47,8 @@ _operations = {
     "subtract": Operation("subtract", subtract, "Subtract second number from first (a - b)"),
     "multiply": Operation("multiply", multiply, "Multiply two numbers (a * b)"),
     "divide": Operation("divide", divide, "Divide first by second (a / b)"),
+    "power": Operation("power", power, "Raise a to the power b (a ** b)"),
+    "int_divide": Operation("int_divide", int_divide, "Integer quotient trunc(a / b)"),
 }
 
 

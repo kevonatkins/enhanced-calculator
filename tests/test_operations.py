@@ -15,3 +15,14 @@ def test_divide_and_zero():
     assert div.func(8, 4) == 2
     with pytest.raises(Exception):
         div.func(1, 0)
+
+
+def test_power_and_int_divide():
+    pow_op = make_operation("power")
+    idiv = make_operation("int_divide")
+
+    assert pow_op.func(2, 3) == 8
+    assert pow_op.func(9, 0.5) == 3  # square root via power just as a quick sanity
+
+    assert idiv.func(7, 3) == 2
+    assert idiv.func(-7, 3) == -2   # trunc toward 
