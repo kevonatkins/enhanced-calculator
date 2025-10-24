@@ -16,15 +16,13 @@ class History:
         self._observers.append(obs)
 
     def notify_observers(self, calc):
+        # pass dict to observers
+        try: 
+            calc_dict = calc.to_dict()
+        except Exception:
+            calc_dict = {"operation": getattr(calc, "op_name", None)}
         for obs in self._observers:
-            obs.update(calc)
-
-
-    def push(self, calc: Calculation):
-        if len(self._items) >= self._max:
-            self._items.pop(0)
-        self._caretaker.save(self._items)
-        self._items.append(calc)
+            obs.update(calc_dict)
 
     def list(self):
         return list(self._items)
