@@ -4,11 +4,21 @@ from .calculation import Calculation
 from .calculator_memento import Caretaker
 from .exceptions import PersistenceError
 
+
 class History:
     def __init__(self, max_size=1000):
         self._items: list[Calculation] = []
         self._max = max_size
         self._caretaker = Caretaker()
+        self._observers = []
+
+    def register_observer(self, obs):
+        self._observers.append(obs)
+
+    def notify_observers(self, calc):
+        for obs in self._observers:
+            obs.update(calc)
+
 
     def push(self, calc: Calculation):
         if len(self._items) >= self._max:
@@ -61,4 +71,11 @@ class History:
                 result=float(row["result"]),
                 ts=row["timestamp"],
             )
-            self._items.append(c)
+            self._items.append(c) 
+            
+    def push(self, calc: Calculation):
+        if len(self._items) >= self._max:
+            self._items.pop(0)
+        self._caretaker.save(self._items)
+        self._items.append(calc)
+        self.notify_observers(calc)    
