@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from datetime import datetime
+from datetime import datetime, timezone
 from .operations import make_operation
 
 @dataclass
@@ -13,7 +13,7 @@ class Calculation:
     def execute(self):
         spec = make_operation(self.op_name)
         self.result = spec.func(self.a, self.b)
-        self.ts = datetime.utcnow().isoformat()
+        self.ts = datetime.now(timezone.utc).isoformat()
         return self.result
 
     def to_dict(self):
