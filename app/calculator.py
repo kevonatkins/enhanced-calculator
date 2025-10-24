@@ -2,11 +2,22 @@ from __future__ import annotations
 from .calculator_config import load_config
 from .exceptions import CalculatorError
 from .input_validators import validate_two_numbers
-from .operations import make_operation
+from .operations import make_operation, all_operations
 from .calculation import Calculation
 from .history import History
 from .logger import get_logger
 from .observers import LoggingObserver, AutoSaveObserver
+
+# ------------------------Dynamic help registry via Decorator-----------------------------------
+_HELP_REGISTRY: dict[str, str] = {}
+
+def command(name: str, help_text: str):
+    """Decorator to register CLI commands and their help text."""
+    def wrapper(cls):
+        _HELP_REGISTRY[name] = help_text
+        cls._cmd_name = name
+        return cls
+    return wrapper
 
 class Calculator:
     def __init__(self):
@@ -49,7 +60,61 @@ class Calculator:
     def load_history(self):
         self.history.load_csv(self.cfg["CALCULATOR_HISTORY_FILE"])
 
-    
+#--------------------------------------Command Pattern for non-operator actions--------------------------------------- 
+class Command:
+    def execute(self, calc: "Calculator", *args) -> None:  # pragma: no cover
+        raise NotImplementedError
+
+@command("help", "Show help menu")
+class HelpCommand(Command):
+    def execute(self, calc, *args):
+        _print_help()
+
+@command("history", "Show calculation history")
+class HistoryCommand(Command):
+    def execute(self, calc, *args):
+        for c in calc.history.list():
+            print(f"{c.ts} | {c.op_name}({c.a}, {c.b}) = {c.result}")
+
+@command("clear", "Clear calculation history")
+class ClearCommand(Command):
+    def execute(self, calc, *args):
+        from colorama import Fore
+        calc.history.clear()
+        print(Fore.YELLOW + "History cleared.")
+
+@command("undo", "Undo last change")
+class UndoCommand(Command):
+    def execute(self, calc, *args):
+        from colorama import Fore
+        calc.history.undo()
+        print(Fore.YELLOW + "Undo done.")
+
+@command("redo", "Redo last change")
+class RedoCommand(Command):
+    def execute(self, calc, *args):
+        from colorama import Fore
+        calc.history.redo()
+        print(Fore.YELLOW + "Redo done.")
+
+@command("save", "Save history to CSV")
+class SaveCommand(Command):
+    def execute(self, calc, *args):
+        from colorama import Fore
+        calc.save_history()
+        print(Fore.GREEN + "History saved.")
+
+@command("load", "Load history from CSV")
+class LoadCommand(Command):
+    def execute(self, calc, *args):
+        from colorama import Fore
+        calc.load_history()
+        print(Fore.GREEN + "History loaded.")
+
+@command("exit", "Exit the application")
+class ExitCommand(Command):
+    def execute(self, calc, *args):
+        raise SystemExit(0)    
 
 def _print_help():  # pragma: no cover
     print("Commands:")
