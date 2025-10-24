@@ -117,11 +117,17 @@ class ExitCommand(Command):
         raise SystemExit(0)    
 
 def _print_help():  # pragma: no cover
-    print("Commands:")
-    print("  add|subtract|multiply|divide|power|root|modulus|int_divide|percent|abs_diff a b")
-    print("  history | clear | undo | redo")
-    print("  save | load")
-    print("  help | exit")
+    from colorama import Fore
+    print(Fore.CYAN + "Operations:")
+    for op in all_operations():
+        print(f"  {op.name:<12} {op.help}")
+    print(Fore.CYAN + "Commands:")
+    for name, help_text in sorted(_HELP_REGISTRY.items()):
+
+        # skip ops if registered as commands
+        if name in {o.name for o in all_operations()}:
+            continue
+        print(f"  {name:<12} {help_text}")
 
 def repl():  # pragma: no cover
     from colorama import Fore, Style, init as color_init
