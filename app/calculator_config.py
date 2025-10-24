@@ -1,6 +1,7 @@
 import os
 from pathlib import Path
-from dotenv import load_dotenv
+from dotenv import load_dotenv 
+from typing import Any, Dict 
 
 DEFAULTS = {
     "CALCULATOR_LOG_DIR": "var/log",
@@ -12,9 +13,9 @@ DEFAULTS = {
     "CALCULATOR_DEFAULT_ENCODING": "utf-8",
 }
 
-def load_config():
+def load_config() -> Dict[str, Any]:
     load_dotenv()
-    cfg = {k: os.getenv(k, v) for k, v in DEFAULTS.items()}
+    cfg: Dict[str, Any] = {k: os.getenv(k, v) for k, v in DEFAULTS.items()}
 
     # ensure dirs exist
     log_dir = Path(cfg["CALCULATOR_LOG_DIR"]); log_dir.mkdir(parents=True, exist_ok=True)
