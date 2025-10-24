@@ -38,4 +38,13 @@ class Calculator:
             c.result = result
         # record into history (this will trigger observers)
         self.history.push(c)
-        return result
+        return result 
+    
+    def save_history(self):
+        self.history.save_csv(
+            self.cfg["CALCULATOR_HISTORY_FILE"],
+            self.cfg["CALCULATOR_DEFAULT_ENCODING"],
+        )
+
+    def load_history(self):
+        self.history.load_csv(self.cfg["CALCULATOR_HISTORY_FILE"])
