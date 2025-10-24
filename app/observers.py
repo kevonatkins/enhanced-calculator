@@ -3,7 +3,7 @@ from .logger import get_logger
 
 class Observer:
     """Observer base class."""
-    def update(self, calc_dict: dict) -> None:
+    def update(self, _calc_dict: dict) -> None:
         raise NotImplementedError
 
 class LoggingObserver(Observer):
