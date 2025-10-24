@@ -134,7 +134,17 @@ def repl():  # pragma: no cover
             if not raw:
                 continue
             parts = raw.split()
-            cmd, args = parts[0].lower(), parts[1:]
+            cmd, args = parts[0].lower(), parts[1:] 
+
+             # 1) command objects (help/history/clear/undo/redo/save/load/exit)
+            cmd_cls = next((c for c in Command.__subclasses__() if getattr(c, "_cmd_name", "") == cmd), None)
+            if cmd_cls:
+                try:
+                    cmd_cls().execute(calc, *args)
+                except SystemExit:
+                    print(Fore.YELLOW + "Bye!")
+                    return
+                continue
 
             if cmd in {"help"}:
                 _print_help(); continue
