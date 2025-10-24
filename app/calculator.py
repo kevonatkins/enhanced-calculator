@@ -146,25 +146,6 @@ def repl():  # pragma: no cover
                     return
                 continue
 
-            if cmd in {"help"}:
-                _print_help(); continue
-            if cmd == "exit":
-                print(Fore.YELLOW + "Bye!"); return
-            if cmd == "history":
-                for c in calc.history.list():
-                    print(f"{c.ts} | {c.op_name}({c.a}, {c.b}) = {c.result}")
-                continue
-            if cmd == "clear":
-                calc.history.clear(); print(Fore.YELLOW + "History cleared."); continue
-            if cmd == "undo":
-                calc.history.undo(); print(Fore.YELLOW + "Undo done."); continue
-            if cmd == "redo":
-                calc.history.redo(); print(Fore.YELLOW + "Redo done."); continue
-            if cmd == "save":
-                calc.save_history(); print(Fore.GREEN + "History saved."); continue
-            if cmd == "load":
-                calc.load_history(); print(Fore.GREEN + "History loaded."); continue
-
             # assume operation with two args
             if cmd:
                 if len(args) != 2:
