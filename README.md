@@ -1,5 +1,5 @@
 # Enhanced Calculator Command-Line Application
-![CI](https://github.com/kevonatkins/enhanced-calculator/blob/main/.github/workflows/python-app.yml/badge.svg)
+![CI](https://github.com/kevonatkins/enhanced-calculator/blob/main/.github/workflows/python-app.yml/)
 
 ### NJIT – IS601 / CS634 Midterm Project  
 **Author:** Kevon Atkins  
