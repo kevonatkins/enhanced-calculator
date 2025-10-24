@@ -51,7 +51,7 @@ class Calculator:
 
     
 
-    def _print_help():  # pragma: no cover
+def _print_help():  # pragma: no cover
     print("Commands:")
     print("  add|subtract|multiply|divide|power|root|modulus|int_divide|percent|abs_diff a b")
     print("  history | clear | undo | redo")
